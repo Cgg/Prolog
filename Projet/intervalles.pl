@@ -19,6 +19,11 @@ fill(L,LR) :- it( X, T ),
 	     fill( L1, LR ).
 fill(L,L).
 
+/* procedure de remplissage des contraintes */
+fill_contrainte( avant, I1, I2 ) :-.
+fill_contrainte( disj, I1, I2 ) :-.
+fill_contrainte( Type, I1, I2 ) :-.
+
 solve( Input, L, TMax ) :-
 
 /* Chargement des donnees en entree. */
@@ -26,4 +31,9 @@ consult( Input ),
 
 LI = [],
 
-fill( LI,L ).
+fill( LI,L )
+
+/* Contraintes */
+
+
+.

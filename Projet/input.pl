@@ -32,11 +32,11 @@ ctrt([avant,j,k]).
 %% On pourrait ajouter aussi la contrainte de disjonction entre les tâches
 %% a,b,c,e,f,h (toujours comme dans le td)
 
-ctrt([allDisj,a,b,c,e,f,h]).
+% ctrt([allDisj,a,b,c,e,f,h]).
 
 %% ou plus artisanalement :
 
 ctrt([disj,a,b]). ctrt([disj,a,c]). ctrt([disj,a,e]). ctrt([disj,f,h]).
 
-%% Avec ces disjonctions il faut 98 unités de temps pour réaliser l’ensemble.
+%% Avec ces disjonctions il faut 98 unités de temps pour réaliser l'ensemble.
 
