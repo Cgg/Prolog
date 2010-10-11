@@ -12,6 +12,10 @@
 
 :- use_module( library( 'clp/bounds' ) ).
 
+/* Acces par index dans une liste */
+element_at(X,[X|_],1).
+element_at(X,[_|L],K) :- K > 1, K1 is K - 1, element_at(X,L,K1).
+
 /* procedure de remplissage de la liste des intervalles */
 fill(L,LR) :- it( X, T ),
              not( member( [ X,_,_,_ ], L ) ), !,
@@ -20,20 +24,19 @@ fill(L,LR) :- it( X, T ),
 fill(L,L).
 
 /* procedure de remplissage des contraintes */
-fill_contrainte( avant, I1, I2, LT ) :-
-	member( ( I1,_,F1,_ ), LT ), member( ( I2,D2,_,_ ), LT ), F1 #< D2,
-	fill_contrainte( T, I3, I4, LT ).
+fill_contrainte( avant, I1, I2, LIT, LC ) :-
+	member( ( I1,_,F1,_ ), LIT ), member( ( I2,D2,_,_ ), LT ), F1 #< D2,
+	fill_contrainte( T, I3, I4, LIT, LC ).
 
-fill_contrainte( disj, I1, I2, LT ) :-
-	member( ( I1,_,F1,_ ), LT ), member( ( I2,D2,_,_ ), LT ), F1 #< D2 #\/ D1 #> F2,
-	fill_contrainte( T, I3, I4, LT ).
+fill_contrainte( disj, I1, I2, LIT, LC ) :-
+	member( ( I1,_,F1,_ ), LIT ), member( ( I2,D2,_,_ ), LT ), F1 #< D2 #\/ D1 #> F2,
+	fill_contrainte( T, I3, I4, LIT, LC ).
 
-fill_contrainte( Type, I1, I2, LT ) :-
+fill_contrainte( Type, I1, I2, LIT, LC ) :-
 	ctrt( X ),
-        not( member( X, LT ) ), !,
-        append( LT, [ X ], L1 ),
-	fill( L1, LR ).
-
+        not( member( X, LC ) ), !,
+        append( LC, [ X ], L1 ),
+	fill_contrainte( element_at( X, [X|_], 1), element_at( X, [X|_], 2), element_at( X, [X|_], 3), LIT, LC ).
 
 solve( Input, L, TMax ) :-
 
