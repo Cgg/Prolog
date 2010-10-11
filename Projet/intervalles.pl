@@ -24,19 +24,21 @@ fill(L,LR) :- it( X, T ),
 fill(L,L).
 
 /* procedure de remplissage des contraintes */
-fill_contrainte( avant, I1, I2, LIT, LC ) :-
+fill_contrainte( avant, I1, I2 ) :-
 	member( ( I1,_,F1,_ ), LIT ), member( ( I2,D2,_,_ ), LT ), F1 #< D2,
 	fill_contrainte( T, I3, I4, LIT, LC ).
 
-fill_contrainte( disj, I1, I2, LIT, LC ) :-
+fill_contrainte( disj, I1, I2 ) :-
 	member( ( I1,_,F1,_ ), LIT ), member( ( I2,D2,_,_ ), LT ), F1 #< D2 #\/ D1 #> F2,
 	fill_contrainte( T, I3, I4, LIT, LC ).
 
-fill_contrainte( Type, I1, I2, LIT, LC ) :-
+fill_contrainte( LC, LRC ) :-
 	ctrt( X ),
         not( member( X, LC ) ), !,
         append( LC, [ X ], L1 ),
-	fill_contrainte( element_at( X, [X|_], 1), element_at( X, [X|_], 2), element_at( X, [X|_], 3), LIT, LC ).
+	%fill_contrainte( element_at() )
+	fill_contrainte( L1, LRC ).
+fill_contrainte( L, L ).
 
 solve( Input, L, TMax ) :-
 
@@ -45,7 +47,7 @@ consult( Input ),
 
 LI = [],
 
-fill( LI,L )
+fill_contrainte( LI,L )
 
 /* Contraintes */
 
