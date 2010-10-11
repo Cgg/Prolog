@@ -21,10 +21,19 @@ fill(L,L).
 
 /* procedure de remplissage des contraintes */
 fill_contrainte( avant, I1, I2, LT ) :-
-	member( ( I1,_,F1,_ ), LT ), member( ( I2,D2,_,_ ), LT ), F1 #< D2.
+	member( ( I1,_,F1,_ ), LT ), member( ( I2,D2,_,_ ), LT ), F1 #< D2,
+	fill_contrainte( T, I3, I4, LT ).
+
 fill_contrainte( disj, I1, I2, LT ) :-
-	member( ( I1,_,F1,_ ), LT ), member( ( I2,D2,_,_ ), LT ), F1 #< D2.
-fill_contrainte( Type, I1, I2, LT ) :-.
+	member( ( I1,_,F1,_ ), LT ), member( ( I2,D2,_,_ ), LT ), F1 #< D2 #\/ D1 #> F2,
+	fill_contrainte( T, I3, I4, LT ).
+
+fill_contrainte( Type, I1, I2, LT ) :-
+	ctrt( X ),
+        not( member( X, LT ) ), !,
+        append( LT, [ X ], L1 ),
+	fill( L1, LR ).
+
 
 solve( Input, L, TMax ) :-
 
