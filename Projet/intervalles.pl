@@ -25,23 +25,26 @@ fill(L,L).
 
 /* procedure de remplissage des contraintes */
 add_contrainte( avant, I1, I2, LIT ) :-
-	member( ( I1,_,F1,_ ), LIT ), member( ( I2,D2,_,_ ), LIT ), F1 #< D2.
+	member( [ I1,_,F1,_ ], LIT ), member( [ I2,D2,_,_ ], LIT ), F1 #< D2.
 
 add_contrainte( disj, I1, I2, LIT ) :-
-	member( ( I1,_,F1,_ ), LIT ), member( ( I2,D2,_,_ ), LIT ), F1 #< D2 #\/ D1 #> F2.
+	member( [ I1,_,F1,_ ], LIT ), member( [ I2,D2,_,_ ], LIT ), F1 #< D2 #\/ D1 #> F2.
 
 fill_contrainte( LC, LRC, LIT ) :-
 	ctrt( X ),
         not( member( X, LC ) ), !,
         append( LC, [ X ], L1 ),
-	element_at( T, LC, 1 ),
-	element_at( I, LC, 2 ),
-	element_at( J, LC, 3 ),
+	nth0( 0, X, T ),
+	nth0( 1, X, I ),
+	nth0( 2, X, J ),
 	add_contrainte( T, I, J, LIT ),
-	add_contrainte( L1, LRC, LIT ),
-fill_contrainte( L, L, _ ).
+	fill_contrainte( L1, LRC, LIT ).
+fill_contrainte( LC, LC, LIT ).
 
 solve( Input, R_LI, R_LC, TMax ) :-
+
+/* Turn debug mode on */
+%spy( add_contrainte/4 ),
 
 /* Chargement des donnees en entree. */
 consult( Input ),
@@ -53,5 +56,11 @@ fill( LI, R_LI ),
 LC = [],
 
 /* Contraintes */
-fill_contrainte( LC, R_LC, R_LI )
+fill_contrainte( LC, R_LC, R_LI ),
+%label(R_LI)
+
+/* Turn debug mode off */
+%nospy( add_contrainte/4 ),
+notrace,
+nodebug
 .

@@ -9,7 +9,7 @@ it(c,6).
 
 %%pour décrire les contraintes entre intervalles des clauses du type :
 
-ctrt([avant,a,z]). ctrt([avant,a,d]).
+ctrt([avant,a,z]).
 ctrt([avant,z,b]).
 ctrt([avant,b,c]).
 
