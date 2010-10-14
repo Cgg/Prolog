@@ -57,10 +57,9 @@ LC = [],
 
 /* Contraintes */
 fill_contrainte( LC, R_LC, R_LI ),
-%label(R_LI)
 
 /* Turn debug mode off */
 %nospy( add_contrainte/4 ),
-notrace,
-nodebug
+%notrace,
+%nodebug
 .
