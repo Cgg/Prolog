@@ -18,15 +18,14 @@ fill(L,L).
 /* procedure de remplissage des contraintes */
 add_contrainte( I, LIT, TMax ) :-
 	member( [ I, D_I, F_I, Duree_I ], LIT ),
-	D_I #>0,
-	F_I #< TMax,
+	D_I #> -1,
+	F_I #< TMax + 1,
 	( F_I - D_I ) #= Duree_I.
 	
 add_contrainte( avant, I1, I2, LIT, LFinale ) :-
 	member( [ I1,_,F1,_ ], LIT ),
 	member( [ I2,D2,_,_ ], LIT ),
-	%not( member( F1, LFinale ) ), append( LFinale )
-	F1 #< D2.
+	F1 #< D2 + 1.
 
 add_contrainte( disj, I1, I2, LIT, LFinale ) :-
 	member( [ I1,_,F1,_ ], LIT ),
@@ -41,13 +40,13 @@ fill_contrainte( LC, LRC, LIT, LFinale, TMax ) :-
 	nth0( 1, X, I ),
 	nth0( 2, X, J ),
 	add_contrainte( I, LIT, TMax ),
-	add_contrainte( J, LIT, Tmax ),
+	add_contrainte( J, LIT, TMax ),
 	add_contrainte( T, I, J, LIT, LFinale ),
 	fill_contrainte( L1, LRC, LIT, LFinale, TMax ).
 fill_contrainte( LC, LC, LIT, LFinale, TMax ).
 
 /* Fonction principale */
-solve( Input, R_LI, R_LC, TMax ) :-
+solve( Input, R_LI, TMax ) :-
 
 /* Chargement des donnees en entree. */
 consult( Input ),
@@ -60,6 +59,10 @@ fill( LI, R_LI ),
 /* Contraintes */
 LC = [],
 
-fill_contrainte( LC, R_LC, R_LI, LFinale, TMax )
+fill_contrainte( LC, R_LC, R_LI, LFinale, TMax ),
+
+flatten( R_LI, R_LI_F ),
+
+label( R_LI_F )
 
 .
