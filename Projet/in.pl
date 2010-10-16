@@ -22,7 +22,7 @@ ctrt([avant,b,c]).
 
 %% ou plus artisanalement :
 
-ctrt([disj,a,b]). ctrt([disj,a,c]). ctrt([disj,a,e]). ctrt([disj,f,h]).
+% ctrt([disj,a,b]). ctrt([disj,a,c]). ctrt([disj,a,e]). ctrt([disj,f,h]).
 
 %% Avec ces disjonctions il faut 98 unités de temps pour réaliser l'ensemble.
 
