@@ -31,19 +31,20 @@ add_contrainte( avant, I1, I2, LIT, LFinale ) :-
 add_contrainte( disj, I1, I2, LIT, LFinale ) :-
 	member( [ I1,_,F1,_ ], LIT ),
 	member( [ I2,D2,_,_ ], LIT ),
-
 	F1 #< D2 #\/ D1 #> F2.
 
-fill_contrainte( LC, LRC, LIT, LFinale ) :-
+fill_contrainte( LC, LRC, LIT, LFinale, TMax ) :-
 	ctrt( X ),
         not( member( X, LC ) ), !,
         append( LC, [ X ], L1 ),
 	nth0( 0, X, T ),
 	nth0( 1, X, I ),
 	nth0( 2, X, J ),
+	add_contrainte( I, LIT, TMax ),
+	add_contrainte( J, LIT, Tmax ),
 	add_contrainte( T, I, J, LIT, LFinale ),
-	fill_contrainte( L1, LRC, LIT, LFinale ).
-fill_contrainte( LC, LC, LIT, LFinale ).
+	fill_contrainte( L1, LRC, LIT, LFinale, TMax ).
+fill_contrainte( LC, LC, LIT, LFinale, TMax ).
 
 /* Fonction principale */
 solve( Input, R_LI, R_LC, TMax ) :-
@@ -59,8 +60,6 @@ fill( LI, R_LI ),
 /* Contraintes */
 LC = [],
 
-fill_contrainte( LC, R_LC, R_LI, LFinale ),
-
-label( LFinale )
+fill_contrainte( LC, R_LC, R_LI, LFinale, TMax )
 
 .
