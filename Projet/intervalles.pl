@@ -4,10 +4,14 @@
  * - it( X, T ) : intervalle de nom X et de duree T 
  * - ct( [ L ] ) : contrainte.
  * 
- * L est de la forme [ Type, It1, It2 ] ou Type peut prendre la valeur avant, disjoint, ou de la forme [ allDisj | _ ], la queue de la liste etant la liste des intervalles disjoints.
+ * L est de la forme [ Type, It1, It2 ] ou Type peut prendre la valeur avant, 
+ * disjoint, ou de la forme [ allDisj | _ ], la queue de la liste etant la liste
+ * des intervalles disjoints.
  *
  * But du jeu :
- * ecrire un predicat solve( Input, TMax ) ou Input contient des intervalles et des contraintes definies comme ci-dessus et essaie de les ordonnancer dans Tmax.
+ * ecrire un predicat solve( Input, TMax ) ou Input contient des intervalles et
+ * des contraintes definies comme ci-dessus et essaie de les ordonnancer dans 
+ * Tmax.
  */
 
 :- use_module( library( 'clp/bounds' ) ).
@@ -24,22 +28,22 @@ fill(L,LR) :- it( X, T ),
 fill(L,L).
 
 /* procedure de remplissage des contraintes */
-add_contrainte( avant, I1, I2, LIT ) :-
-	member( [ I1,_,F1,_ ], LIT ), member( [ I2,D2,_,_ ], LIT ), F1 #< D2.
+add_contrainte( avant, I1, I2, LIT, LTL1, LTL2 ) :-
+	member( [ I1,_,F1,_ ], LIT ), member( [ I2,D2,_,_ ], LIT ), F1 #< D2, append(LTL1,[D2,F1],LTL2).
 
-add_contrainte( disj, I1, I2, LIT ) :-
-	member( [ I1,_,F1,_ ], LIT ), member( [ I2,D2,_,_ ], LIT ), F1 #< D2 #\/ D1 #> F2.
+add_contrainte( disj, I1, I2, LIT, LTL1, LTL2 ) :-
+	member( [ I1,_,F1,_ ], LIT ), member( [ I2,D2,_,_ ], LIT ), F1 #< D2 #\/ D1 #> F2, append(LTL1, [D1,F2],LTL2).
 
-fill_contrainte( LC, LRC, LIT ) :-
+fill_contrainte( LC, LRC, LIT, LTL1, LTL2 ) :-
 	ctrt( X ),
         not( member( X, LC ) ), !,
         append( LC, [ X ], L1 ),
 	nth0( 0, X, T ),
 	nth0( 1, X, I ),
 	nth0( 2, X, J ),
-	add_contrainte( T, I, J, LIT ),
-	fill_contrainte( L1, LRC, LIT ).
-fill_contrainte( LC, LC, LIT ).
+	add_contrainte( T, I, J, LIT, LTL1, LTL2 ),
+	fill_contrainte( L1, LRC, LIT, LTL2, LTL1 ).
+fill_contrainte( LC, LC, LIT, LTL1, LTL1 ).
 
 solve( Input, R_LI, R_LC, TMax ) :-
 
@@ -54,10 +58,13 @@ LI = [],
 fill( LI, R_LI ),
 
 LC = [],
+LTAUDIZD = [],
+LAAZ = [],
 
 /* Contraintes */
-fill_contrainte( LC, R_LC, R_LI ),
-
+fill_contrainte( LC, R_LC, R_LI, LAAZ, LTAUDIZD ),
+label(LTAUDIZD),
+label(LAAZ)
 /* Turn debug mode off */
 %nospy( add_contrainte/4 ),
 %notrace,
