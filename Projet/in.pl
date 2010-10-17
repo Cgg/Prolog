@@ -1,6 +1,6 @@
 /*
-* Ceci est un fichier Prolog, espèce de vim de mes klzhenf!
-*/
+ * Ceci est un fichier Prolog, espèce de vim de mes klzhenf!
+ */
 
 it(a,30). %% pour a est un intervalle de durée 30
 it(z,5). %% si la duréé est inconnue on mettrait
@@ -11,6 +11,7 @@ it(c,6).
 
 ctrt([avant,a,z]).
 ctrt([avant,z,b]).
+<<<<<<< HEAD
 ctrt([avant,b,c]).
 
 %% Comme cela ne vous aura pas échappé il s’agit de l’exemple sur la
@@ -25,4 +26,7 @@ ctrt([avant,b,c]).
 ctrt([disj,a,b]). ctrt([disj,a,c]).
 
 %% Avec ces disjonctions il faut 98 unités de temps pour réaliser l'ensemble.
+=======
+>>>>>>> d270667ba6cfd53c671a035add0f7651a98deef8
 
+ctrt([disj,a,c]).
