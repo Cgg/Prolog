@@ -22,17 +22,17 @@ add_contrainte( I, LIT, TMax ) :-
 	F_I #< TMax + 1,
 	( F_I - D_I ) #= Duree_I.
 	
-add_contrainte( avant, I1, I2, LIT, LFinale ) :-
+add_contrainte( avant, I1, I2, LIT ) :-
 	member( [ I1,_,F1,_ ], LIT ),
 	member( [ I2,D2,_,_ ], LIT ),
 	F1 #< D2 + 1.
 
-add_contrainte( disj, I1, I2, LIT, LFinale ) :-
+add_contrainte( disj, I1, I2, LIT ) :-
 	member( [ I1,_,F1,_ ], LIT ),
 	member( [ I2,D2,_,_ ], LIT ),
 	F1 #< D2 #\/ D1 #> F2.
 
-fill_contrainte( LC, LRC, LIT, LFinale, TMax ) :-
+fill_contrainte( LC, LRC, LI, TMax ) :-
 	ctrt( X ),
         not( member( X, LC ) ), !,
         append( LC, [ X ], L1 ),
@@ -41,9 +41,9 @@ fill_contrainte( LC, LRC, LIT, LFinale, TMax ) :-
 	nth0( 2, X, J ),
 	add_contrainte( I, LIT, TMax ),
 	add_contrainte( J, LIT, TMax ),
-	add_contrainte( T, I, J, LIT, LFinale ),
-	fill_contrainte( L1, LRC, LIT, LFinale, TMax ).
-fill_contrainte( LC, LC, LIT, LFinale, TMax ).
+	add_contrainte( T, I, J, LIT ),
+	fill_contrainte( L1, LRC, LIT, TMax ).
+fill_contrainte( LC, LC, LIT, TMax ).
 
 /* Fonction principale */
 solve( Input, R_LI, TMax ) :-
@@ -59,8 +59,9 @@ fill( LI, R_LI ),
 /* Contraintes */
 LC = [],
 
-fill_contrainte( LC, R_LC, R_LI, LFinale, TMax ),
+fill_contrainte( LC, R_LC, R_LI, TMax ),
 
+/* La liste est "applatie" avec flatten pour un affichage du resultat avec label */
 flatten( R_LI, R_LI_F ),
 
 label( R_LI_F )
