@@ -11,22 +11,4 @@ it(c,6).
 
 ctrt([avant,a,z]).
 ctrt([avant,z,b]).
-<<<<<<< HEAD
-ctrt([avant,b,c]).
-
-%% Comme cela ne vous aura pas échappé il s’agit de l’exemple sur la
-%% méthode pert traité en td 3if. Il est réalisable en 93 unités de temps.
-%% On pourrait ajouter aussi la contrainte de disjonction entre les tâches
-%% a,b,c,e,f,h (toujours comme dans le td)
-
-% ctrt([allDisj,a,b,c,e,f,h]).
-
-%% ou plus artisanalement :
-
-ctrt([disj,a,b]). ctrt([disj,a,c]).
-
-%% Avec ces disjonctions il faut 98 unités de temps pour réaliser l'ensemble.
-=======
->>>>>>> d270667ba6cfd53c671a035add0f7651a98deef8
-
 ctrt([disj,a,c]).
