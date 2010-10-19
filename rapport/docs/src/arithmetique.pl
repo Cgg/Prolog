@@ -1,5 +1,3 @@
-/* Ceci est un fichier Prolog ! */
-
 /* element : renvoie le n-ieme element de la liste, ou donne le rang dans
  * la liste de l'element donne.
  *

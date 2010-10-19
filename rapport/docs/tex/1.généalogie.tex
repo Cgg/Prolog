@@ -6,10 +6,76 @@
 
         \lstinputlisting{\SRCPATH/genealogie.pl}
 
-% ajouter commentaires
+            Nous avons créé 3 relations: {\ttfamily m(homme)} et {\ttfamily f(femme)} pour 
+le sexe, et {\ttfamily parent(parent, enfant)} pour lier un parent à un enfant.
+
+Cela nous permet de créer des prédicats comme {\ttfamily pere(pere, enfant)} ou 
+{\ttfamily mere(mere, enfat)}, {\ttfamily frere(personne1, personne2)} ou encore 
+{\ttfamily cousin(personne1, personne2)}.
+
+Ces prédicats permettent d'exprimer des requêtes sur l'arbre généalogique.
 
     \subsection{Test}
 
-% 2-3 requêtes
-    
+Différentes requêtes:
+\begin{description}
+    \item Les parents de Jean:\\
+\begin{verbatim}
+?- parent(Parent,jean).
+Parent = renee ;
+Parent = brice ;
+false.
+
+?-
+\end{verbatim}
+    \item Les enfants de Marie:\\
+\begin{verbatim}
+?- parent(marie,Enfant).
+Enfant = marc ;
+Enfant = martin ;
+Enfant = murielle.
+
+?- 
+\end{verbatim}
+    \item Les frères et soeurs de Paul:\\
+\begin{verbatim}
+?- sibling(paul,Sibling).
+Sibling = jean ;
+Sibling = octave ;
+Sibling = cosinus.
+
+?-
+\end{verbatim}
+    \item Paul et Octave sont-ils de la même fratrie?\\
+\begin{verbatim}
+?- sibling(paul,octave).
+true .
+
+?-
+\end{verbatim}
+    \item Qui sont les cousins de Josh?\\
+\begin{verbatim}
+?- cousin(josh, Cousin).
+Cousin = obiwan ;
+Cousin = toto ;
+false.
+
+?-
+\end{verbatim}
+    \item Qui sont les femmes?\\  
+\begin{verbatim}
+?- f(Femme).
+Femme = yoko ;
+Femme = ursula ;
+Femme = marie ;
+Femme = renee ;
+Femme = murielle.
+
+?-
+\end{verbatim}
+\end{description}    
+... et ainsi de suite.
     \subsection{Bilan}
+        Cet exercice nous a permis d'utiliser Prolog comme une base de
+données et d'effectuer des requêtes dessus.
+

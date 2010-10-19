@@ -10,30 +10,30 @@
 	entrée ou donne les indices auxquels apparaît un élément donné dans
 	une liste.
 
-	L'appel est le suivant : \textbf{element( ?N, ?X, +L )}, où :
-	\begin {itemize}
+	L'appel est le suivant : {\ttfamily{element( ?N, ?X, +L )}}, où :
+	\begin{itemize}
 	    \item N est l'indice
 	    \item X est l'élément
 	    \item L est la liste
-	\end {itemize}
+	\end{itemize}
 
     \subsection{Test}
 	On teste ici chaque utilisation du prédicat element.
 
 	Récupérer le n-ième élément d'une liste :
 
-	\begin {lstlisting}
+	\begin{verbatim}
 	    element( 7, X, [a,b,c,d,a,q,r,a,r]).
 	    X = r ;
 	    
 	    element( 42, X, [a,b,c,d,a,q,r,a,r]).
 	    false.
-	\end {lstlisting}
+	\end{verbatim}
 
-	Récupérer les indices auquels un élément donné apparaît dans une liste
+	Récupérer les indices auxquels un élément donné apparaît dans une liste
 	:
 
-	\begin {lstlisting}
+	\begin{verbatim}
 	    element( N, a, [a,b,c,d,a,q,r,a,r]).
 	    N = 1 ;
 	    N = 5 ;
@@ -41,7 +41,7 @@
 	    
 	    element( N, z, [a,b,c,d,a,q,r,a,r]).
 	    true .
-	\end {lstlisting}
+	\end{verbatim}
 
     \subsection{Bilan}
 

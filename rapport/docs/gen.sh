@@ -35,10 +35,13 @@ then
 fi
 
 # Font setting
-echo "
+if [ $FONT != "default" ]
+then
+    echo "
 % Font settings:
 \usepackage{$FONT}
 " >> ${FILE}
+fi
 
 # Page layout settings
 echo "
@@ -48,8 +51,8 @@ echo "
 \usepackage{geometry}
 \geometry{
 	a4paper,  % 21 x 29,7 cm
-	body={170mm,250mm},
-	left=20mm, 
+	body={140mm,230mm},
+	left=35mm, 
 	top=30mm,
 	headheight=7mm, 
 	headsep=4mm,
@@ -123,7 +126,7 @@ echo "
 
 # Main part
 	echo "	%Including all the files:" >> $FILE
-for i in `ls $TEXPATH`
+for i in `ls ${TEXPATH}/*.tex`
 do
 	# Nouvelle page pour chaque partie:
 	# \include = \clearpage input{file}  \clearpage
@@ -135,19 +138,17 @@ do
 	echo "
 % Fichier $i
 " >> $FILE
-#	iconv -t utf-8 "${TEXPATH}/$i" >> $FILE
-	cat "$TEXPATH/$i" >> $FILE
+	if [ `file -i "$i" | grep utf-8 | wc -l` == 1 ]
+    then
+        cat "$i" >> $FILE
+        echo "File $i included"
+    else
+	    iconv -flatin1 -tutf-8 "$i" >> $FILE
+        echo "File $i converted to utf-8 and included"
+    fi
 
 done
-#	uconv -t utf-8 ${TEXPATH}/*.tex >> temp
-#cat temp >> $FILE
-#for j in `ls ../src`
-#do
-#iconv -c -f utf-8 -t latin1 ../src/$j -o docs/src/$j
-#done
-#iconv -c -f utf-8 -t latin1 $FILE -o ${FILE}.lat1
-#mv ${FILE}.lat1 $FILE
-# End of document
+
 echo "
 % The end
 \end{document}

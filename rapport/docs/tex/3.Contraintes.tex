@@ -6,10 +6,45 @@
 
         \lstinputlisting{\SRCPATH/zebre.pl}
 
-% ajouter commentaires
+            On donne un numéro à chaque maison, puis on pose les 
+contraintes données par l'énoncé. Il ne reste plus qu'à faire la 
+corespondance entre le numéro de la maison et la propriété recherchée.    
 
     \subsection{Test}
 
-% 2-3 requêtes
-    
+L'exécution du programme dans {\ttfamily{swipl}} donne:
+
+\begin{verbatim}
+?- zebre(Nationalites, Boissons, Animaux, Cigarettes, Couleurs).
+Nationalites = [1, 3, 5, 2, 4],
+Boissons = [3, 4, 2, 5, 1],
+Animaux = [4, 5, 3, 1, 2],
+Cigarettes = [1, 4, 3, 2, 5],
+Couleurs = [2, 3, 1, 4, 5].
+
+?-
+\end{verbatim}
+
+   Ainsi, 
+\begin{description}
+    \item la maison 1 est jaune, habitée par un norvégien qui boit de 
+l'eau, fume des Kools et possède un renard;
+
+    \item la mainson 2 est bleue, habitée par un ukrainien qui boit du 
+the, fume des Chesterfields et possède un cheval;
+
+    \item la maison 3 est rouge, habitée par un anglais  qui boit du 
+lait, fume des Oldgolds et possède un escargot;
+
+    \item la maison 4 est verte, habitée par un japonais qui boit du 
+café, fume des Cravens et possède un zèbre;
+
+    \item et enfin la mainson 5 est blanche, habitée par un espagnol qui
+boit du vin, fume des Gitanes et possède un chien.
+\end{description}
+
     \subsection{Bilan}
+
+        Cet exercice nous a permis de nous familiariser avec la 
+programmation par contrainte, qui nécessite de bien poser le problème
+pour laisser Prolog le résoudre.
