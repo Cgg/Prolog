@@ -1,13 +1,3 @@
-/* Ceci est un fichier Prolog ! */
-
-/* element : renvoie le n-ieme element de la liste, ou donne le rang dans
- * la liste de l'element donne.
- *
- * N = rang donne ou a chercher
- * X = element a chercher ou donne
- * L = liste dans laquelle s'effectue la recherche.
- */
-
 element( N, X, L ) :-
 	atom( X ),
 	element2( 1, N, X, L ).

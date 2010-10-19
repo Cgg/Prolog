@@ -6,11 +6,41 @@
 
         \lstinputlisting{\SRCPATH/arithmetique.pl}
 
-% ajouter commentaires
+	Le prédicat element renvoie le n-ième élément d'une liste donnée en
+	entrée ou donne les indices auxquels apparaît un élément donné dans
+	une liste.
+
+	L'appel est le suivant : \textbf{element( ?N, ?X, +L )}, où :
+	\begin {itemize}
+	    \item N est l'indice
+	    \item X est l'élément
+	    \item L est la liste
+	\end {itemize}
 
     \subsection{Test}
+	On teste ici chaque utilisation du prédicat element.
 
-% 2-3 requêtes
+	Récupérer le n-ième élément d'une liste :
 
-    
+	\begin {lstlisting}
+	    element( 7, X, [a,b,c,d,a,q,r,a,r]).
+	    X = r ;
+	    
+	    element( 42, X, [a,b,c,d,a,q,r,a,r]).
+	    false.
+	\end {lstlisting}
+
+	Récupérer les indices auquels un élément donné apparaît dans une liste
+	:
+
+	\begin {lstlisting}
+	    element( N, a, [a,b,c,d,a,q,r,a,r]).
+	    N = 1 ;
+	    N = 5 ;
+	    N = 8 ;
+	    
+	    element( N, z, [a,b,c,d,a,q,r,a,r]).
+	    true .
+	\end {lstlisting}
+
     \subsection{Bilan}
